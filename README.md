@@ -1,9 +1,24 @@
-[![Latest version](https://img.shields.io/maven-central/v/com.xdev-software/xdev-swing-framework-template)](https://mvnrepository.com/artifact/com.xdev-software/xdev-swing-framework-template)
-[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/xdev-swing-framework-template/checkBuild.yml?branch=develop)](https://github.com/xdev-software/xdev-swing-framework-template/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
-[![javadoc](https://javadoc.io/badge2/com.xdev-software/xdev-swing-framework-template/javadoc.svg)](https://javadoc.io/doc/com.xdev-software/xdev-swing-framework-template) 
-# xdev-swing-framework-template
+[![Latest version](https://img.shields.io/maven-central/v/com.xdev-software/xapi-db-ingres)](https://mvnrepository.com/artifact/com.xdev-software/xapi-db-ingres)
+[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/xapi-db-ingres/checkBuild.yml?branch=develop)](https://github.com/xdev-software/xapi-db-ingres/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
+[![javadoc](https://javadoc.io/badge2/com.xdev-software/xapi-db-ingres/javadoc.svg)](https://javadoc.io/doc/com.xdev-software/xapi-db-ingres) 
+# SqlEngine Database Adapter Ingres
 
-A XDEV Swing Framework Template
+The XDEV Application Framework provides an abstraction over database dialects as part of its SqlEngine. This module is the Database Adapter for Ingres which includes the Ingres-specific implementation for database access.
+
+## Important Note
+
+We once wrote this Database Adapter for Ingres 4.0.7. Apperently, the oldest version of this driver for maven is 9.1-3.2.4 (https://mvnrepository.com/artifact/com.ingres.jdbc/iijdbc/9.1-3.2.4). But this is not compatible with our code. 
+You therefore, have to integrate your own 4.0.7 driver manualy without maven.
+
+Furthermore, this Adapter is not able to write to the Database. Only reading is available. <br>
+The Following actions are not supported:
+- createTable
+- addColumn
+- alterColumn
+- dropColumn
+- createIndex
+- dropIndex
+- appendEscapeName
 
 ## XDEV-IDE
 The [XDEV(-IDE)](https://xdev.software/en/products/swing-builder) is a visual Java development environment for fast and easy application development (RAD - Rapid Application Development). XDEV differs from other Java IDEs such as Eclipse or NetBeans, focusing on programming through a far-reaching RAD concept. The IDE's main components are a Swing GUI builder, the XDEV Application Framework and numerous drag-and-drop tools and wizards with which the functions of the framework can be integrated.
@@ -17,4 +32,4 @@ If you need support as soon as possible and you can't wait for any pull request,
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
 
 ## Dependencies and Licenses
-View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/xdev-swing-framework-template/dependencies/)
+View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/xapi-db-ingres/dependencies/)
