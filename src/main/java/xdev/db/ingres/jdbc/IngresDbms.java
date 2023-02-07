@@ -17,9 +17,6 @@
  */
 package xdev.db.ingres.jdbc;
 
-
-
-
 import com.xdev.jadoth.sqlengine.dbms.DbmsAdaptor;
 import com.xdev.jadoth.sqlengine.dbms.SQLExceptionParser;
 import com.xdev.jadoth.sqlengine.interfaces.ConnectionProvider;
@@ -28,27 +25,49 @@ import com.xdev.jadoth.sqlengine.internal.tables.SqlTableIdentity;
 
 
 public class IngresDbms
-		extends
-		DbmsAdaptor.Implementation<IngresDbms, IngresDMLAssembler, IngresDDLMapper, IngresRetrospectionAccessor, IngresSyntax>
+	extends
+	DbmsAdaptor.Implementation<IngresDbms, IngresDMLAssembler, IngresDDLMapper, IngresRetrospectionAccessor,
+		IngresSyntax>
 {
 	// /////////////////////////////////////////////////////////////////////////
 	// constants //
 	// ///////////////////
-
-	/** The Constant MAX_VARCHAR_LENGTH. 1 GB */
-	protected static final int	MAX_VARCHAR_LENGTH		= 1000000000;
-
-	protected static final char	IDENTIFIER_DELIMITER	= '"';
-
-
+	
+	/**
+	 * The Constant MAX_VARCHAR_LENGTH. 1 GB
+	 */
+	protected static final int MAX_VARCHAR_LENGTH = 1000000000;
+	
+	protected static final char IDENTIFIER_DELIMITER = '"';
+	
 	// /////////////////////////////////////////////////////////////////////////
 	// static methods //
 	// /////////////////
 	
-	public static ConnectionProvider<IngresDbms> singleConnection(final String host,
-			final int port, final String user, final String password, final String database, final String properties)
+	public IngresDbms()
 	{
-		return new ConnectionProvider.Body<IngresDbms>(new IngresConnectionInformation(
+		this(new IngresExceptionParser());
+	}
+	
+	// /////////////////////////////////////////////////////////////////////////
+	// constructors //
+	// ///////////////
+	
+	public IngresDbms(final SQLExceptionParser sqlExceptionParser)
+	{
+		super(sqlExceptionParser, false);
+		this.setRetrospectionAccessor(new IngresRetrospectionAccessor(this));
+		this.setDMLAssembler(new IngresDMLAssembler(this));
+		this.setDdlMapper(new IngresDDLMapper(this));
+		this.getConfiguration().setDelimitTableIdentifiers(true);
+		this.getConfiguration().setDelimitColumnIdentifiers(true);
+	}
+	
+	public static ConnectionProvider<IngresDbms> singleConnection(
+		final String host,
+		final int port, final String user, final String password, final String database, final String properties)
+	{
+		return new ConnectionProvider.Body<>(new IngresConnectionInformation(
 			host,
 			port,
 			user,
@@ -58,47 +77,24 @@ public class IngresDbms
 			new IngresDbms())
 		);
 	}
-
-
-	// /////////////////////////////////////////////////////////////////////////
-	// constructors //
-	// ///////////////
-
-	public IngresDbms()
-	{
-		this(new IngresExceptionParser());
-	}
-
-
-	public IngresDbms(final SQLExceptionParser sqlExceptionParser)
-	{
-		super(sqlExceptionParser,false);
-		this.setRetrospectionAccessor(new IngresRetrospectionAccessor(this));
-		this.setDMLAssembler(new IngresDMLAssembler(this));
-		this.setDdlMapper(new IngresDDLMapper(this));
-		this.getConfiguration().setDelimitTableIdentifiers(true);
-		this.getConfiguration().setDelimitColumnIdentifiers(true);
-	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#createConnectionInformation(String, int, String, String, String, String)
 	 */
 	@Override
-	public IngresConnectionInformation createConnectionInformation(final String host,
-			final int port, final String user, final String password, final String catalog, final String properties)
+	public IngresConnectionInformation createConnectionInformation(
+		final String host,
+		final int port, final String user, final String password, final String catalog, final String properties)
 	{
-		return new IngresConnectionInformation(host,port,user,password,catalog,properties, this);
+		return new IngresConnectionInformation(host, port, user, password, catalog, properties, this);
 	}
-
-
+	
 	@Override
 	public boolean supportsOFFSET_ROWS()
 	{
 		return true;
 	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#updateSelectivity(SqlTableIdentity)
 	 */
@@ -107,8 +103,7 @@ public class IngresDbms
 	{
 		return null;
 	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#assembleTransformBytes(byte[], StringBuilder)
 	 */
@@ -117,8 +112,7 @@ public class IngresDbms
 	{
 		return sb;
 	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#initialize(DatabaseGateway)
 	 */
@@ -126,8 +120,7 @@ public class IngresDbms
 	public void initialize(final DatabaseGateway<IngresDbms> dbc)
 	{
 	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#rebuildAllIndices(String)
 	 */
@@ -136,8 +129,7 @@ public class IngresDbms
 	{
 		return null;
 	}
-
-
+	
 	/**
 	 * @see DbmsAdaptor#getMaxVARCHARlength()
 	 */
@@ -146,8 +138,7 @@ public class IngresDbms
 	{
 		return MAX_VARCHAR_LENGTH;
 	}
-
-
+	
 	@Override
 	public char getIdentifierDelimiter()
 	{

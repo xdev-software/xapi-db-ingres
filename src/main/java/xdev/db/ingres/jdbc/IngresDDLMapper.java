@@ -17,18 +17,14 @@
  */
 package xdev.db.ingres.jdbc;
 
-
-
-
 import com.xdev.jadoth.sqlengine.dbms.standard.StandardDDLMapper;
 
 
 public class IngresDDLMapper extends StandardDDLMapper<IngresDbms>
 {
-
-	public IngresDDLMapper(IngresDbms dbmsAdaptor)
+	
+	public IngresDDLMapper(final IngresDbms dbmsAdaptor)
 	{
 		super(dbmsAdaptor);
 	}
-
 }

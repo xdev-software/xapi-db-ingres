@@ -18,9 +18,6 @@
 
 package xdev.db.ingres.jdbc;
 
-
-
-
 import static com.xdev.jadoth.sqlengine.SQL.LANG.DEFAULT_VALUES;
 import static com.xdev.jadoth.sqlengine.SQL.Punctuation._;
 import static com.xdev.jadoth.sqlengine.SQL.Punctuation.dot;
@@ -42,6 +39,7 @@ import com.xdev.jadoth.sqlengine.internal.SqlColumn;
 import com.xdev.jadoth.sqlengine.internal.interfaces.TableExpression;
 import com.xdev.jadoth.sqlengine.internal.tables.SqlTableIdentity;
 
+
 public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 {
 	// /////////////////////////////////////////////////////////////////////////
@@ -52,32 +50,32 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		super(dbms);
 	}
 	
-
 	@Override
-	public StringBuilder assembleColumn(final SqlColumn column, final StringBuilder sb,
-			final int indentLevel, int flags)
+	public StringBuilder assembleColumn(
+		final SqlColumn column, final StringBuilder sb,
+		final int indentLevel, int flags)
 	{
 		final TableExpression owner = column.getOwner();
 		
 		final DbmsAdaptor<?> dbms = this.getDbmsAdaptor();
 		final String columnName = column.getColumnName();
 		final boolean delimColumn = (dbms.getConfiguration().isDelimitColumnIdentifiers() || QueryPart
-				.isDelimitColumnIdentifiers(flags))
-				&& (columnName != null && !"*".equals(columnName));
+			.isDelimitColumnIdentifiers(flags))
+			&& (columnName != null && !"*".equals(columnName));
 		final char delimiter = dbms.getIdentifierDelimiter();
 		
 		flags |= QueryPart.bitDelimitColumnIdentifiers(this.getDbmsAdaptor().getConfiguration()
-				.isDelimitColumnIdentifiers());
+			.isDelimitColumnIdentifiers());
 		
 		if(owner != null && !QueryPart.isUnqualified(flags))
 		{
-			this.assembleColumnQualifier(column,sb,flags);
+			this.assembleColumnQualifier(column, sb, flags);
 		}
 		if(delimColumn)
 		{
 			sb.append(delimiter);
 		}
-		QueryPart.assembleObject(column.getExpressionObject(),this,sb,indentLevel,flags);
+		QueryPart.assembleObject(column.getExpressionObject(), this, sb, indentLevel, flags);
 		if(delimColumn)
 		{
 			sb.append(delimiter);
@@ -85,10 +83,10 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		return sb;
 	}
 	
-
 	@Override
-	public StringBuilder assembleColumnQualifier(final SqlColumn column, final StringBuilder sb,
-			final int flags)
+	public StringBuilder assembleColumnQualifier(
+		final SqlColumn column, final StringBuilder sb,
+		final int flags)
 	{
 		final TableExpression owner = column.getOwner();
 		String qualifier = getAlias(owner);
@@ -96,21 +94,21 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		{
 			if(owner instanceof SqlTableIdentity)
 			{
-				return assembleTableIdentifier((SqlTableIdentity)owner,sb,0,flags).append(dot);
+				return this.assembleTableIdentifier((SqlTableIdentity)owner, sb, 0, flags).append(dot);
 			}
 			else
 			{
 				qualifier = owner.toString();
 			}
 		}
-		final char delimiter = getDbmsAdaptor().getIdentifierDelimiter();
+		final char delimiter = this.getDbmsAdaptor().getIdentifierDelimiter();
 		return sb.append(delimiter).append(qualifier).append(delimiter).append(dot);
 	}
 	
-
 	@Override
-	public StringBuilder assembleTableIdentifier(SqlTableIdentity table, StringBuilder sb,
-			int indentLevel, int flags)
+	public StringBuilder assembleTableIdentifier(
+		final SqlTableIdentity table, final StringBuilder sb,
+		final int indentLevel, final int flags)
 	{
 		final DbmsAdaptor<?> dbms = this.getDbmsAdaptor();
 		
@@ -122,9 +120,9 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		if(schema != null)
 		{
 			sb.append(delimiter)
-			   .append(schema)
-			   .append(delimiter)
-			   .append(dot);
+				.append(schema)
+				.append(delimiter)
+				.append(dot);
 		}
 		sb.append(delimiter)
 			.append(name)
@@ -144,10 +142,10 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		return sb;
 	}
 	
-
 	// /////////////////////////////////////////////////////////////////////////
 	// override methods //
 	// ///////////////////
+	
 	/**
 	 * @see StandardDMLAssembler#assembleSELECT(SELECT, StringBuilder, int, int, String, String)
 	 */
@@ -160,17 +158,16 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		final String clauseSeperator,
 		final String newLine)
 	{
-		indent(sb,indentLevel,isSingleLine(flags)).append(query.keyword());
-		this.assembleSelectDISTINCT(query,sb,indentLevel,flags);
-		this.assembleSelectItems(query,sb,flags,indentLevel,newLine);
-		this.assembleSelectSqlClauses(query,sb,indentLevel,flags | ASEXPRESSION,clauseSeperator,
-				newLine);
-		this.assembleAppendSELECTs(query,sb,indentLevel,flags,clauseSeperator,newLine);
-		this.assembleSelectRowLimit(query,sb,flags,clauseSeperator,newLine,indentLevel);
+		indent(sb, indentLevel, isSingleLine(flags)).append(query.keyword());
+		this.assembleSelectDISTINCT(query, sb, indentLevel, flags);
+		this.assembleSelectItems(query, sb, flags, indentLevel, newLine);
+		this.assembleSelectSqlClauses(query, sb, indentLevel, flags | ASEXPRESSION, clauseSeperator,
+			newLine);
+		this.assembleAppendSELECTs(query, sb, indentLevel, flags, clauseSeperator, newLine);
+		this.assembleSelectRowLimit(query, sb, flags, clauseSeperator, newLine, indentLevel);
 		return sb;
 	}
 	
-
 	/**
 	 * @see StandardDMLAssembler#assembleSelectRowLimit(SELECT, StringBuilder, int, String, String, int)
 	 */
@@ -215,36 +212,36 @@ public class IngresDMLAssembler extends StandardDMLAssembler<IngresDbms>
 		return sb;
 	}
 	
-
 	@Override
-	protected StringBuilder assembleINSERT(INSERT query, StringBuilder sb, int flags,
-			String clauseSeperator, String newLine, int indentLevel)
+	protected StringBuilder assembleINSERT(
+		final INSERT query, final StringBuilder sb, final int flags,
+		final String clauseSeperator, final String newLine, final int indentLevel)
 	{
-		indent(sb,indentLevel,isSingleLine(flags)).append(query.keyword()).append(_INTO_);
+		indent(sb, indentLevel, isSingleLine(flags)).append(query.keyword()).append(_INTO_);
 		
-		this.assembleTableIdentifier(query.getTable(),sb,indentLevel,flags | OMITALIAS);
+		this.assembleTableIdentifier(query.getTable(), sb, indentLevel, flags | OMITALIAS);
 		sb.append(newLine);
 		
-		this.assembleAssignmentColumnsClause(query,query.getColumnsClause(),sb,indentLevel,flags
-				| UNQUALIFIED);
+		this.assembleAssignmentColumnsClause(query, query.getColumnsClause(), sb, indentLevel, flags
+			| UNQUALIFIED);
 		sb.append(newLine);
 		
 		final SELECT valueSelect = query.filterSelect();
 		if(valueSelect != null)
 		{
 			sb.append(clauseSeperator);
-			QueryPart.assembleObject(valueSelect,this,sb,indentLevel,flags);
+			QueryPart.assembleObject(valueSelect, this, sb, indentLevel, flags);
 		}
 		else
 		{
 			final AssignmentValuesClause values = query.getValuesClause();
 			if(values != null)
 			{
-				this.assembleAssignmentValuesClause(query,values,sb,indentLevel,flags);
+				this.assembleAssignmentValuesClause(query, values, sb, indentLevel, flags);
 			}
 			else
 			{
-				indent(sb,indentLevel,isSingleLine(flags)).append(DEFAULT_VALUES);
+				indent(sb, indentLevel, isSingleLine(flags)).append(DEFAULT_VALUES);
 			}
 		}
 		

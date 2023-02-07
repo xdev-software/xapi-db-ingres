@@ -23,7 +23,6 @@ import com.xdev.jadoth.sqlengine.internal.tables.SqlIndex;
 import com.xdev.jadoth.sqlengine.internal.tables.SqlTableIdentity;
 
 
-
 public class IngresRetrospectionAccessor extends StandardRetrospectionAccessor<IngresDbms>
 {
 	
@@ -33,24 +32,21 @@ public class IngresRetrospectionAccessor extends StandardRetrospectionAccessor<I
 	{
 		super(dbmsadaptor);
 	}
-
-
+	
 	@Override
-	public String createSelect_INFORMATION_SCHEMA_COLUMNS(SqlTableIdentity table)
+	public String createSelect_INFORMATION_SCHEMA_COLUMNS(final SqlTableIdentity table)
 	{
 		throw new RuntimeException(RETROSPECTION_NOT_IMPLEMENTED_YET);
 	}
-
-
+	
 	@Override
-	public String createSelect_INFORMATION_SCHEMA_INDICES(SqlTableIdentity table)
+	public String createSelect_INFORMATION_SCHEMA_INDICES(final SqlTableIdentity table)
 	{
 		throw new RuntimeException(RETROSPECTION_NOT_IMPLEMENTED_YET);
 	}
-
-
+	
 	@Override
-	public SqlIndex[] loadIndices(SqlTableIdentity table) throws SQLEngineException
+	public SqlIndex[] loadIndices(final SqlTableIdentity table) throws SQLEngineException
 	{
 		throw new RuntimeException(RETROSPECTION_NOT_IMPLEMENTED_YET);
 	}

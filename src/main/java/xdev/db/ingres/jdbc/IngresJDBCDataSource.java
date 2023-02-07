@@ -17,9 +17,6 @@
  */
 package xdev.db.ingres.jdbc;
 
-
-
-
 import xdev.db.DBException;
 import xdev.db.jdbc.JDBCDataSource;
 
@@ -30,7 +27,6 @@ public class IngresJDBCDataSource extends JDBCDataSource<IngresJDBCDataSource, I
 	{
 		super(new IngresDbms());
 	}
-	
 	
 	@Override
 	public Parameter[] getDefaultParameters()
@@ -48,21 +44,19 @@ public class IngresJDBCDataSource extends JDBCDataSource<IngresJDBCDataSource, I
 		};
 	}
 	
-	
 	@Override
 	protected IngresConnectionInformation getConnectionInformation()
 	{
 		return new IngresConnectionInformation(
-			getHost(),
-			getPort(),
-			getUserName(),
-			getPassword().getPlainText(),
-			getCatalog(),
-			getUrlExtension(),
-			getDbmsAdaptor()
+			this.getHost(),
+			this.getPort(),
+			this.getUserName(),
+			this.getPassword().getPlainText(),
+			this.getCatalog(),
+			this.getUrlExtension(),
+			this.getDbmsAdaptor()
 		);
 	}
-	
 	
 	@Override
 	public IngresJDBCConnection openConnectionImpl() throws DBException
@@ -70,13 +64,11 @@ public class IngresJDBCDataSource extends JDBCDataSource<IngresJDBCDataSource, I
 		return new IngresJDBCConnection(this);
 	}
 	
-	
 	@Override
 	public IngresJDBCMetaData getMetaData() throws DBException
 	{
 		return new IngresJDBCMetaData(this);
 	}
-	
 	
 	@Override
 	public boolean canExport()

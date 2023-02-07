@@ -17,10 +17,8 @@
  */
 package xdev.db.ingres.jdbc;
 
-
-
-
 import com.xdev.jadoth.sqlengine.dbms.DbmsConnectionInformation;
+
 import xdev.db.ConnectionInformation;
 
 
@@ -30,13 +28,13 @@ public class IngresConnectionInformation extends ConnectionInformation<IngresDbm
 	// constructors //
 	// ///////////////////
 	
-	public IngresConnectionInformation(final String host, final int port, final String user,
-			final String password, final String database, final String urlExtension,
-			final IngresDbms dbmsAdaptor)
+	public IngresConnectionInformation(
+		final String host, final int port, final String user,
+		final String password, final String database, final String urlExtension,
+		final IngresDbms dbmsAdaptor)
 	{
-		super(host,port,user,password,database,urlExtension,dbmsAdaptor);
+		super(host, port, user, password, database, urlExtension, dbmsAdaptor);
 	}
-	
 	
 	// /////////////////////////////////////////////////////////////////////////
 	// getters //
@@ -44,7 +42,7 @@ public class IngresConnectionInformation extends ConnectionInformation<IngresDbm
 	
 	/**
 	 * Gets the database.
-	 * 
+	 *
 	 * @return the database
 	 */
 	public String getDatabase()
@@ -52,22 +50,19 @@ public class IngresConnectionInformation extends ConnectionInformation<IngresDbm
 		return this.getCatalog();
 	}
 	
-	
 	// /////////////////////////////////////////////////////////////////////////
 	// setters //
 	// ///////////////////
 	
 	/**
 	 * Sets the database.
-	 * 
-	 * @param database
-	 *            the database to set
+	 *
+	 * @param database the database to set
 	 */
 	public void setDatabase(final String database)
 	{
-		setCatalog(database);
+		this.setCatalog(database);
 	}
-	
 	
 	// /////////////////////////////////////////////////////////////////////////
 	// override methods //
@@ -79,21 +74,20 @@ public class IngresConnectionInformation extends ConnectionInformation<IngresDbm
 	@Override
 	public String createJdbcConnectionUrl()
 	{
-		String user = getUser();
-		String pwd = getPassword();
-		String url;
+		final String user = this.getUser();
+		final String pwd = this.getPassword();
+		final String url;
 		if((user == null || user.length() == 0) && (pwd == null || pwd.length() == 0))
 		{
-			url = "jdbc:ingres://" + getHost() + ":" + getPort() + "/" + getCatalog();
+			url = "jdbc:ingres://" + this.getHost() + ":" + this.getPort() + "/" + this.getCatalog();
 		}
 		else
 		{
-			url = "jdbc:ingres://" + getHost() + ":" + getPort() + "/" + getCatalog() + ";UID="
-					+ user + ";PWD=" + pwd;
+			url = "jdbc:ingres://" + this.getHost() + ":" + this.getPort() + "/" + this.getCatalog() + ";UID="
+				+ user + ";PWD=" + pwd;
 		}
-		return appendUrlExtension(url);
+		return this.appendUrlExtension(url);
 	}
-	
 	
 	/**
 	 * @return

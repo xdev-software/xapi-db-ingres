@@ -17,9 +17,6 @@
  */
 package xdev.db.ingres.jdbc;
 
-
-
-
 import com.xdev.jadoth.sqlengine.dbms.DbmsSyntax;
 
 
@@ -27,7 +24,6 @@ public class IngresSyntax extends DbmsSyntax.Implementation<IngresDbms>
 {
 	protected IngresSyntax()
 	{
-		super(wordSet(),wordSet());
+		super(wordSet(), wordSet());
 	}
-	
 }
