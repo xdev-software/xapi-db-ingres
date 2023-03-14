@@ -94,6 +94,11 @@
             <artifactId>xapi</artifactId>
             <version>${xdev.xapi.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ingres.jdbc</groupId>
+            <artifactId>iijdbc</artifactId>
+            <version>10.2-4.1.10</version>
+        </dependency>
     </dependencies>
 
     <build>
