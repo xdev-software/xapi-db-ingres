@@ -3,7 +3,7 @@
 The XDEV Application Framework provides an abstraction over database dialects as part of its SqlEngine. This module is
 the Database Adapter for Ingres which includes the Ingres-specific implementation for database access.
 
-## Important Note
+### :information_source: Important Notes
 
 We once wrote this Database Adapter for Ingres 4.0.7. Apparently, the oldest version of
 this [driver for maven is 9.1-3.2.4](https://mvnrepository.com/artifact/com.ingres.jdbc/iijdbc/9.1-3.2.4). But this is
