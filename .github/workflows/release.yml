@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       
     - name: Set up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '8'
@@ -106,7 +106,7 @@ jobs:
         git pull
     
     - name: Set up JDK OSSRH
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with: # running setup-java again overwrites the settings.xml
         distribution: 'temurin'
         java-version: '8'
@@ -137,7 +137,7 @@ jobs:
         git pull
 
     - name: Set up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '8'
@@ -198,8 +198,12 @@ jobs:
         git push origin
     
     - name: pull-request
-      uses: repo-sync/pull-request@v2
-      with:
-        destination_branch: "develop"
-        pr_title: "Sync back"
-        pr_body: "An automated PR to sync changes back"
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh_pr_up() { 
+          gh pr create "$@" || gh pr edit "$@" 
+        }
+        gh_pr_up -B "develop" \
+          --title "Sync back" \
+          --body "An automated PR to sync changes back"
